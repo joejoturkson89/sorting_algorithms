@@ -6,33 +6,46 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *c, *tmp;
+	listint_t *c, *p, *tmp;
 
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
 
 	c = (*list)->next;
+	tmp = c->next;
 
-	while (c != NULL)
+	while (c)
 	{
-		tmp = c;
-
-		while (tmp->prev != NULL && tmp->n < tmp->prev->n)
+		if (c->n < c->prev->n)
 		{
-			tmp->prev->next = tmp->next;
-
-			if (tmp->next != NULL)
-				tmp->next->prev = tmp->prev;
-			tmp->next = tmp->prev;
-			tmp->prev = tmp->prev->prev;
-			tmp->next->prev = tmp;
-
-			if (tmp->prev == NULL)
-				*list = tmp;
-
-			print_list(*list);
+			p = c->prev;
+			while (p && (c->n < p->n))
+			{
+				if (!(p->prev))
+				{
+					p->prev = c;
+					c->prev->next = c->next;
+					if (c->next)
+						c->next->prev = c->prev;
+					c->next = p;
+					c->prev = NULL;
+					*list = c;
+				}
+				else
+				{
+					c->prev->next = c->next;
+					if (c->next)
+						c->next->prev = c->prev;
+					p->prev->next = c;
+					c->prev = p->prev;
+					p->prev = c;
+					c->next = p;
+				}
+				print_list(*list);
+				p = c->prev;
+			}
 		}
-
-		c = c->next;
+		c = tmp;
+		c ? (tmp = c->next) : (tmp = NULL);
 	}
 }
