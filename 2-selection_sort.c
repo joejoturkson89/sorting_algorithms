@@ -19,29 +19,26 @@ void swap(int *a, int *b)
  */
 void selection_sort(int *array, size_t size)
 {
-	int index = 0;
-	int min, tmp;
-	size_t i, k;
+	int tmp;
+	size_t i, k, min_index;
 
 	if (array == NULL || size < 2)
 		return;
 
 	for (i = 0; i < size - 1; i++)
 	{
-		min = array[i];
-		for (k = 1 + 1; k < size; k++)
+		min_index = i;
+		for (k = i + 1; k < size; k++)
 		{
-			if (array[k] < min)
-			{
-				min = array[k];
-				index = k;
-			}
+			if (array[k] < array[min_index])
+				min_index = k;
 		}
-		if (min != array[i])
+
+		if (min_index != i)
 		{
 			tmp = array[i];
-			array[i] = array[index];
-			array[index] = tmp;
+			array[i] = array[min_index];
+			array[min_index] = tmp;
 			print_array(array, size);
 		}
 	}
