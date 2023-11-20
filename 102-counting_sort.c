@@ -1,15 +1,13 @@
 #include "sort.h"
 /**
- * counting_sort - function that sorts an array of integers in ascending
- * order using the Counting sort algorithm
+ * counting_sort - sorts an array of integers using the Counting sort algorithm
  * @array: array to be sorted
  * @size: size of the array
  */
 void counting_sort(int *array, size_t size)
 {
 	size_t i;
-	int j, k, num, dup;
-	int *count;
+	int j, k, num, dup, *count;
 
 	if (array == NULL || size < 2)
 		return;
@@ -47,6 +45,5 @@ void counting_sort(int *array, size_t size)
 				array[i++] = (j + 1);
 		}
 	}
-
 	free(count);
 }
